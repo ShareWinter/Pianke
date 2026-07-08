@@ -1,5 +1,9 @@
 /// API 配置
 class ApiConfig {
+  // Gitee 更新清单地址。创建 Gitee 仓库后，确保根目录存在 update.json。
+  static const String updateManifestUrl =
+      'https://gitee.com/watlem4g/Pianke/raw/main/update.json';
+
   // 请求头
   static Map<String, String> get defaultHeaders => {
     'User-Agent':

@@ -1381,7 +1381,7 @@ class StorageService {
         .toSet();
   }
 
-  /// 智能合集：按类型/导演/年代动态聚合，返回带成员数与预览海报的虚拟合集。
+  /// 智能合集：按类型/导演/年代/地区动态聚合，返回带成员数与预览海报的虚拟合集。
   Future<List<MovieCollection>> querySmartCollections() async {
     _ensureInitialized();
     final result = <MovieCollection>[];
@@ -1450,6 +1450,34 @@ class StorageService {
       );
     }
 
+    // 地区（按单个地区拆分；如“中国台湾/日本”会同时计入两个地区）
+    final regionCounts = <String, int>{};
+    final regionRows = await _db.query(_moviesTable, columns: const ['region']);
+    for (final row in regionRows) {
+      final raw = row['region']?.toString() ?? '';
+      for (final region in _splitRegionFacets(raw)) {
+        regionCounts[region] = (regionCounts[region] ?? 0) + 1;
+      }
+    }
+    final topRegions = regionCounts.entries.where((e) => e.value >= 2).toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    for (final entry in topRegions.take(6)) {
+      result.add(
+        MovieCollection(
+          id: 'smart_region_${entry.key}',
+          kind: CollectionKind.smartRegion,
+          name: entry.key,
+          iconKey: 'public',
+          smartValue: entry.key,
+          memberCount: entry.value,
+          previewPosters: await _smartPreviewPosters(
+            CollectionKind.smartRegion,
+            entry.key,
+          ),
+        ),
+      );
+    }
+
     // 导演（取片数 >=2 的前 6 个）
     final directorCounts = <String, int>{};
     final directorRows = await _db.query(
@@ -1493,6 +1521,9 @@ class StorageService {
     String value,
   ) async {
     _ensureInitialized();
+    if (kind == CollectionKind.smartRegion) {
+      return _querySmartRegionMemberIds(value);
+    }
     final clause = _smartWhereClause(kind, value);
     if (clause == null) return const [];
     final rows = await _db.rawQuery(
@@ -1509,6 +1540,9 @@ class StorageService {
     CollectionKind kind,
     String value,
   ) async {
+    if (kind == CollectionKind.smartRegion) {
+      return _querySmartRegionPreviewPosters(value);
+    }
     final clause = _smartWhereClause(kind, value);
     if (clause == null) return const [];
     final rows = await _db.rawQuery(
@@ -1539,9 +1573,47 @@ class StorageService {
               "CAST(substr(year, 1, 4) AS INTEGER) >= ? AND CAST(substr(year, 1, 4) AS INTEGER) < ?",
           whereArgs: [decade, decade + 10],
         );
+      case CollectionKind.smartRegion:
+        return null;
       case CollectionKind.manual:
         return null;
     }
+  }
+
+  Future<List<String>> _querySmartRegionMemberIds(String value) async {
+    final rows = await _db.query(
+      _moviesTable,
+      columns: const ['id', 'region'],
+      orderBy: 'created_at DESC',
+    );
+    return rows
+        .where(
+          (row) => _splitRegionFacets(
+            row['region']?.toString() ?? '',
+          ).contains(value),
+        )
+        .map((row) => row['id']?.toString() ?? '')
+        .where((id) => id.isNotEmpty)
+        .toList();
+  }
+
+  Future<List<String>> _querySmartRegionPreviewPosters(String value) async {
+    final rows = await _db.query(
+      _moviesTable,
+      columns: const ['poster', 'region'],
+      where: "poster != ''",
+      orderBy: 'created_at DESC',
+    );
+    return rows
+        .where(
+          (row) => _splitRegionFacets(
+            row['region']?.toString() ?? '',
+          ).contains(value),
+        )
+        .map((row) => row['poster']?.toString() ?? '')
+        .where((poster) => poster.isNotEmpty)
+        .take(4)
+        .toList();
   }
 
   MovieCollection _collectionFromDbMap(

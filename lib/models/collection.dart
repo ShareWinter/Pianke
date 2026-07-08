@@ -1,9 +1,10 @@
-/// 合集类型：手动合集 + 三类智能虚拟合集。
+/// 合集类型：手动合集 + 智能虚拟合集。
 enum CollectionKind {
   manual('manual'),
   smartGenre('smartGenre'),
   smartDirector('smartDirector'),
-  smartDecade('smartDecade');
+  smartDecade('smartDecade'),
+  smartRegion('smartRegion');
 
   final String value;
   const CollectionKind(this.value);
@@ -32,7 +33,7 @@ class MovieCollection {
   final int sortOrder;
   final DateTime createdAt;
 
-  /// 智能合集的过滤值（类型名 / 导演名 / 年代起始年）。手动合集为空。
+  /// 智能合集的过滤值（类型名 / 导演名 / 年代起始年 / 地区）。手动合集为空。
   final String smartValue;
 
   // ---- 派生展示字段 ----
@@ -65,6 +66,7 @@ class MovieCollection {
     'whatshot',
     'mood',
     'auto_awesome',
+    'public',
   ];
 
   MovieCollection copyWith({

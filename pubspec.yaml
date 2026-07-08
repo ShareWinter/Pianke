@@ -1,7 +1,7 @@
 name: random_movie
 description: "片刻 - 记录每一次观影，决定今晚看什么"
 publish_to: 'none'
-version: 0.1.0
+version: 0.1.1
 
 environment:
   sdk: ^3.10.7
@@ -39,6 +39,7 @@ dependencies:
   intl: ^0.19.0
   file_picker: ^8.1.2
   path_provider: ^2.1.2
+  package_info_plus: ^9.0.1
 
 dev_dependencies:
   flutter_test:

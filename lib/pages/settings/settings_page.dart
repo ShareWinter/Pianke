@@ -4,7 +4,9 @@ import 'package:random_movie/config/app_theme.dart';
 import 'package:random_movie/providers/providers.dart';
 import 'package:random_movie/services/backup_service.dart';
 import 'package:random_movie/services/storage_service.dart';
+import 'package:random_movie/services/update_service.dart';
 import 'package:random_movie/widgets/common/common_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -15,13 +17,16 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   late final BackupService _backupService;
+  late final UpdateService _updateService;
   bool _exportLoading = false;
   bool _importLoading = false;
+  bool _updateLoading = false;
 
   @override
   void initState() {
     super.initState();
     _backupService = BackupService(StorageService());
+    _updateService = UpdateService();
   }
 
   @override
@@ -88,6 +93,114 @@ class _SettingsPageState extends State<SettingsPage> {
                 color: colorScheme.onSurface.withValues(alpha: 0.45),
                 height: 1.5,
               ),
+            ),
+          ),
+          const SizedBox(height: AppTheme.spacingLarge),
+          _SectionHeader(label: '关于'),
+          const SizedBox(height: AppTheme.spacingSmall),
+          SoftContainer(
+            child: _SettingsTile(
+              icon: Icons.system_update_rounded,
+              iconColor: const Color(0xFFFFB703),
+              title: '检查更新',
+              subtitle: '从 Gitee 检查片刻新版本',
+              loading: _updateLoading,
+              onTap: _handleCheckUpdate,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _handleCheckUpdate() async {
+    if (_updateLoading) return;
+    setState(() => _updateLoading = true);
+    try {
+      final result = await _updateService.checkForUpdate();
+      if (!mounted) return;
+      if (!result.hasUpdate) {
+        AppToast.show(
+          context,
+          '当前已是最新版本 ${result.current.version}',
+          type: ToastType.success,
+        );
+        return;
+      }
+      await _showUpdateDialog(result.update!);
+    } on UpdateCheckException catch (error) {
+      if (!mounted) return;
+      AppToast.show(context, error.message, type: ToastType.error);
+    } catch (_) {
+      if (!mounted) return;
+      AppToast.show(context, '检查更新失败，请稍后再试', type: ToastType.error);
+    } finally {
+      if (mounted) setState(() => _updateLoading = false);
+    }
+  }
+
+  Future<void> _showUpdateDialog(AppUpdateInfo update) async {
+    final colorScheme = Theme.of(context).colorScheme;
+    await showDialog<void>(
+      context: context,
+      barrierDismissible: !update.forceUpdate,
+      barrierColor: Colors.black.withValues(alpha: 0.3),
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppTheme.radiusLarge),
+          side: BorderSide(color: colorScheme.outlineVariant),
+        ),
+        title: Text(update.displayTitle),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '版本 ${update.versionName}',
+              style: TextStyle(
+                fontSize: 13,
+                color: colorScheme.onSurface.withValues(alpha: 0.55),
+              ),
+            ),
+            if (update.changelog.isNotEmpty) ...[
+              const SizedBox(height: AppTheme.spacingMedium),
+              for (final item in update.changelog)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Text('• $item'),
+                ),
+            ],
+          ],
+        ),
+        actions: [
+          if (!update.forceUpdate)
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('稍后'),
+            ),
+          TextButton(
+            onPressed: () async {
+              final url = Uri.tryParse(update.downloadUrl);
+              if (url == null || !url.hasScheme) {
+                AppToast.show(context, '下载地址无效', type: ToastType.error);
+                return;
+              }
+              final launched = await launchUrl(
+                url,
+                mode: LaunchMode.externalApplication,
+              );
+              if (!launched && mounted) {
+                AppToast.show(context, '无法打开下载地址', type: ToastType.error);
+                return;
+              }
+              if (launched && ctx.mounted) {
+                Navigator.of(ctx).pop();
+              }
+            },
+            style: TextButton.styleFrom(foregroundColor: AppTheme.accent),
+            child: const Text(
+              '去下载',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
         ],

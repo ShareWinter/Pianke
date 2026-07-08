@@ -21,6 +21,8 @@ IconData collectionIcon(String key) {
       return Icons.mood;
     case 'auto_awesome':
       return Icons.auto_awesome;
+    case 'public':
+      return Icons.public;
     case 'collections':
     default:
       return Icons.collections_bookmark;

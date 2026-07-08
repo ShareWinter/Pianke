@@ -79,7 +79,11 @@ class _CollectionsPageState extends State<CollectionsPage> {
               ],
               if (smart.isNotEmpty) ...[
                 const SizedBox(height: AppTheme.spacingLarge),
-                _sectionHeader(context, '智能合集', subtitle: '按类型 / 年代 / 导演自动归类'),
+                _sectionHeader(
+                  context,
+                  '智能合集',
+                  subtitle: '按类型 / 年代 / 导演 / 地区自动归类',
+                ),
                 const SizedBox(height: AppTheme.spacingSmall),
                 _grid(context, smart, canDelete: false),
               ],
@@ -90,7 +94,11 @@ class _CollectionsPageState extends State<CollectionsPage> {
     );
   }
 
-  Widget _sectionHeader(BuildContext context, String title, {String? subtitle}) {
+  Widget _sectionHeader(
+    BuildContext context,
+    String title, {
+    String? subtitle,
+  }) {
     final colorScheme = Theme.of(context).colorScheme;
     return Row(
       children: [
@@ -413,7 +421,10 @@ class _CollectionEditorDialogState extends State<_CollectionEditorDialog> {
             Navigator.of(context).pop((name: name, iconKey: _iconKey));
           },
           style: TextButton.styleFrom(foregroundColor: AppTheme.accent),
-          child: const Text('保存', style: TextStyle(fontWeight: FontWeight.bold)),
+          child: const Text(
+            '保存',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
       ],
     );
