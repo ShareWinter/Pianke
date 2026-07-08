@@ -28,10 +28,10 @@
 
 <table>
   <tr>
-    <td align="center"><img src="docs/images/片库首页.jpg" width="220" alt="片库首页" /></td>
-    <td align="center"><img src="docs/images/抽片首页.jpg" width="220" alt="抽片首页" /></td>
-    <td align="center"><img src="docs/images/观影首页.jpg" width="220" alt="观影首页" /></td>
-    <td align="center"><img src="docs/images/设置首页.jpg" width="220" alt="设置首页" /></td>
+    <td align="center"><img src="docs/images/片库首页.webp" width="220" alt="片库首页" /></td>
+    <td align="center"><img src="docs/images/抽片首页.webp" width="220" alt="抽片首页" /></td>
+    <td align="center"><img src="docs/images/观影首页.webp" width="220" alt="观影首页" /></td>
+    <td align="center"><img src="docs/images/设置首页.webp" width="220" alt="设置首页" /></td>
   </tr>
   <tr>
     <td align="center">片库</td>
@@ -48,9 +48,9 @@
 
 <table>
   <tr>
-    <td align="center"><img src="docs/images/影片详情.jpg" width="220" alt="影片详情" /></td>
-    <td align="center"><img src="docs/images/影片详情页观影记录.jpg" width="220" alt="影片详情页观影记录" /></td>
-    <td align="center"><img src="docs/images/编辑观影记录.jpg" width="220" alt="编辑观影记录" /></td>
+    <td align="center"><img src="docs/images/影片详情.webp" width="220" alt="影片详情" /></td>
+    <td align="center"><img src="docs/images/影片详情页观影记录.webp" width="220" alt="影片详情页观影记录" /></td>
+    <td align="center"><img src="docs/images/编辑观影记录.webp" width="220" alt="编辑观影记录" /></td>
   </tr>
   <tr>
     <td align="center">影片详情</td>
@@ -67,12 +67,13 @@
 
 <table>
   <tr>
-    <td align="center"><img src="docs/images/搜索添加.jpg" width="260" alt="搜索添加" /></td>
+    <td align="center"><img src="docs/images/搜索添加.webp" width="260" alt="搜索添加" /></td>
   </tr>
   <tr>
     <td align="center">搜索添加</td>
   </tr>
 </table>
+
 
 ### 合集整理
 
@@ -80,8 +81,8 @@
 
 <table>
   <tr>
-    <td align="center"><img src="docs/images/我的合集.jpg" width="220" alt="我的合集" /></td>
-    <td align="center"><img src="docs/images/合集详情.jpg" width="220" alt="合集详情" /></td>
+    <td align="center"><img src="docs/images/我的合集.webp" width="220" alt="我的合集" /></td>
+    <td align="center"><img src="docs/images/合集详情.webp" width="220" alt="合集详情" /></td>
   </tr>
   <tr>
     <td align="center">我的合集</td>
@@ -89,20 +90,22 @@
   </tr>
 </table>
 
+
 ### 抽片决定
 
 当片库越来越长，片刻可以从你的收藏里抽出一个今晚的答案。不是替你评分，只是帮你把犹豫变成开始。
 
 <table>
   <tr>
-    <td align="center"><img src="docs/images/抽片首页.jpg" width="220" alt="抽片首页" /></td>
-    <td align="center"><img src="docs/images/抽片详情.jpg" width="220" alt="抽片详情" /></td>
+    <td align="center"><img src="docs/images/抽片首页.webp" width="220" alt="抽片首页" /></td>
+    <td align="center"><img src="docs/images/抽片详情.webp" width="220" alt="抽片详情" /></td>
   </tr>
   <tr>
     <td align="center">抽片首页</td>
     <td align="center">抽片结果</td>
   </tr>
 </table>
+
 
 ## 独特之处
 
