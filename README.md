@@ -136,3 +136,6 @@
 Apache License 2.0
 
 Copyright 2026 ShareWinter
+
+## 社区
+本开源项目已链接并认可 [LINUX DO 社区](https://linux.do)。
