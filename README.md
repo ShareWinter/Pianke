@@ -1,116 +1,135 @@
-# 片刻
+<div align="center">
+  <img src="docs/images/app-icon.webp" width="112" alt="片刻应用图标" />
+  <h1 align=center>片刻</h1>
 
-> 记录每一次观影，决定今晚看什么。
+  给每一次观影，留下一点当时的自己。
 
-片刻是一款本地优先的私人观影助手。它不是电影社区，也不是云端片库，而是帮你管理自己的影片、记录观影经历，并在选择困难时用抽片流程快速决定下一部要看的作品。
+  <p>
+    <strong>多次记录</strong> ·
+    <strong>多维感受</strong> ·
+    <strong>私人片库</strong> ·
+    <strong>随机抽片</strong>
+  </p>
+</div>
 
-## ✨ Features
+---
 
-- **本地片库**：影片数据保存在本机，适合维护自己的私人片单。
-- **多入口添加**：支持影片搜索、豆瓣链接、豆瓣片单链接和手动添加。
-- **细化观影记录**：记录观看日期、心情、同伴、评分、短评和重看状态。
-- **抽片决策**：支持常规抽取、三选一、筛选后抽取等流程。
-- **合集抽片**：从指定合集直接抽片，让“今晚看什么”更贴合场景。
-- **观影历史**：列表与日历视图回顾自己的观影节奏。
-- **标签与合集**：用标签、手动合集和智能合集整理片库。
-- **本地备份**：导出/导入 JSON 备份，不依赖服务器。
+## 片刻是什么
 
-## 📱 Screenshots
+片刻不是电影社区，也不是豆瓣的替代品。
 
-> Screenshots coming soon.
+它更像一本只属于你的观影手帐：同一部电影可以记录很多次，每一次都可以留下日期、地点、同伴、心情、评分和短评；也可以什么都不细填，只用两句话写下“那天看完以后，心里发生了什么”。
 
-建议补充以下截图：
+有些电影适合认真标注，有些电影只值得随手记一笔。片刻想保留下来的，正是这些很私人的观影瞬间。
 
-- 片库首页
-- 添加影片
-- 抽片流程
-- 三选一结果
-- 观影记录
-- 合集详情
-- 备份设置
+## 界面预览
 
-## 🧱 Tech Stack
+### 主页一览
 
-- Flutter
-- Provider
-- go_router
-- sqflite
-- SharedPreferences
-- Dio
-- CachedNetworkImage
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/片库首页.jpg" width="220" alt="片库首页" /></td>
+    <td align="center"><img src="docs/images/抽片首页.jpg" width="220" alt="抽片首页" /></td>
+    <td align="center"><img src="docs/images/观影首页.jpg" width="220" alt="观影首页" /></td>
+    <td align="center"><img src="docs/images/设置首页.jpg" width="220" alt="设置首页" /></td>
+  </tr>
+  <tr>
+    <td align="center">片库</td>
+    <td align="center">抽片</td>
+    <td align="center">观影记录</td>
+    <td align="center">设置</td>
+  </tr>
+</table>
 
-## 📂 Project Structure
 
-```text
-lib/
-  config/       # Theme and app configuration
-  models/       # Data models and serialization
-  services/     # Storage, scraping, draw logic, backup
-  providers/    # ChangeNotifier state management
-  pages/        # Route-level screens
-  widgets/      # Reusable UI components
-  router/       # go_router configuration
-```
+### 影片详情与观影记录
 
-## 🚀 Getting Started
+影片详情页不只展示电影信息，更重要的是承载每一次观看后的记录。同一部电影可以反复留下不同时间、不同心情、不同同伴下的感受。
 
-Install dependencies:
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/影片详情.jpg" width="220" alt="影片详情" /></td>
+    <td align="center"><img src="docs/images/影片详情页观影记录.jpg" width="220" alt="影片详情页观影记录" /></td>
+    <td align="center"><img src="docs/images/编辑观影记录.jpg" width="220" alt="编辑观影记录" /></td>
+  </tr>
+  <tr>
+    <td align="center">影片详情</td>
+    <td align="center">观看轨迹</td>
+    <td align="center">编辑记录</td>
+  </tr>
+</table>
 
-```bash
-flutter pub get
-```
+### 添加影片
 
-Run in debug mode:
+想看的电影可以快速加入片库，之后再慢慢补充观看记录、整理合集，或者等某天抽片抽到它。
 
-```bash
-flutter run
-```
+支持搜索添加，以及豆瓣影片链接添加和豆瓣片单链接添加。
 
-Run on a specific device:
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/搜索添加.jpg" width="260" alt="搜索添加" /></td>
+  </tr>
+  <tr>
+    <td align="center">搜索添加</td>
+  </tr>
+</table>
 
-```bash
-flutter run -d <device-id>
-```
+### 合集整理
 
-Analyze code:
+合集适合收纳主题、系列、导演、节日或某种心情。它不是公开片单，而是你给自己的电影分类方式。
 
-```bash
-flutter analyze
-```
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/我的合集.jpg" width="220" alt="我的合集" /></td>
+    <td align="center"><img src="docs/images/合集详情.jpg" width="220" alt="合集详情" /></td>
+  </tr>
+  <tr>
+    <td align="center">我的合集</td>
+    <td align="center">合集详情</td>
+  </tr>
+</table>
 
-Run tests:
+### 抽片决定
 
-```bash
-flutter test
-```
+当片库越来越长，片刻可以从你的收藏里抽出一个今晚的答案。不是替你评分，只是帮你把犹豫变成开始。
 
-Build Android APK:
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/抽片首页.jpg" width="220" alt="抽片首页" /></td>
+    <td align="center"><img src="docs/images/抽片详情.jpg" width="220" alt="抽片详情" /></td>
+  </tr>
+  <tr>
+    <td align="center">抽片首页</td>
+    <td align="center">抽片结果</td>
+  </tr>
+</table>
 
-```bash
-flutter build apk
-```
+## 独特之处
 
-## 🗃️ Data & Privacy
+| 多次观看 | 多维记录 | 轻量短记 |
+| --- | --- | --- |
+| 同一部电影可以反复记录，每一次观看都是独立的记忆。 | 日期、评分、心情、同伴、地点、短评一起构成当时的现场感。 | 不想写长评时，只用一两句话记下当时感觉也足够。 |
 
-片刻采用本地优先设计。影片、观影记录、合集、标签和抽片历史默认保存在本机数据库中，不需要账号，也不会上传到服务器。
+| 私人片库 | 合集整理 | 抽片决定 |
+| --- | --- | --- |
+| 收藏真正属于自己的想看、看过和重看清单。 | 按主题、系列、心情或任意灵感整理电影。 | 不知道今晚看什么时，让片刻从你的片库里给出答案。 |
 
-备份功能会导出明文 JSON 文件，方便你自行保存、迁移或检查数据。请妥善保管备份文件。
+## 使用场景
 
-## 🎬 About Movie Metadata
+- 第二次看同一部电影，想知道自己和上一次有什么不同。
+- 看完电影没力气写长评，但想留下两句真实的感受。
+- 和朋友、恋人、家人一起看过某部片，想把那次场景也记下来。
+- 片单越攒越长，想按心情、主题、系列慢慢整理。
+- 选择困难时，希望从自己的片库里抽出今晚的答案。
 
-片刻可以从豆瓣页面导入影片资料和海报，但豆瓣只是资料来源之一。应用核心仍然是私人片库、观影记录和抽片决策。
+## 数据与隐私
 
-## 🛠️ Development Notes
+片刻默认把影片、观影记录、合集、标签和抽片历史保存在本机。无需登录账号，也不会主动上传你的私人片库。
 
-- 使用 `AppTheme` 中的颜色、间距和圆角 token。
-- 页面层不要直接访问数据库或网络，优先通过 Provider/Service。
-- 数据结构变更需要考虑 SQLite 迁移和备份兼容。
-- 新增测试文件请放在 `test/`，文件名以 `_test.dart` 结尾。
-
-## 📦 Backup Compatibility
-
-当前备份标识为 `Pianke`，并兼容旧版本 `RandoMov` 备份文件。
+备份文件会以明文形式导出，适合自行保存、迁移或检查内容。请把备份放在你信任的位置。
 
 ## License
 
-No license has been specified yet.
+Apache License 2.0
+
+Copyright 2026 ShareWinter
